@@ -8,19 +8,6 @@ const inputDealy = form.elements.delay;
 const radiobutton = form.elements.state;
 const btnSubmit = document.querySelector(".form button")
 
-// console.log(inputDealy.type);
-// radiobutton.forEach(element => {
-//     element.onclick = () => {
-//         if(element.checked) {
-//             // console.log(element.value);
-//             promiseState = element.value;
-//             console.log(promiseState);
-
-//         }
-//     }
-    
-// });
-
 
 function errorMessage (data) {
     iziToast.error({
@@ -29,15 +16,15 @@ function errorMessage (data) {
         position: 'topRight',
         messageColor: 'white',
         backgroundColor: 'rgb(238, 4, 50)',
-        theme: 'dark', // dark
-        color: 'red', // blue, red, green, yellow
+        theme: 'dark', 
+        color: 'red', 
         width: "500",
         messageSize: "16",
         titleSize:"16",
         progressBar: false,
     });
 }
-// }
+
 
 function succesMessage (data) {
     iziToast.success({
@@ -46,7 +33,7 @@ function succesMessage (data) {
         position: 'topRight',
         messageColor: 'white',
         backgroundColor: "#59a10d",
-        theme: 'dark', // dark
+        theme: 'dark', 
         messageSize: "16",
         titleSize:"16",
         progressBar: false,
@@ -60,7 +47,7 @@ function warningMessage (data) {
         position: 'topRight',
         messageColor: 'white',
         backgroundColor: " #ffa000",
-        theme: 'dark', // dark
+        theme: 'dark', 
         messageSize: "16",
         titleSize:"16",
         progressBar: false,
@@ -70,15 +57,12 @@ function warningMessage (data) {
 
 function makePromises (options) {
     const {delay, state} = options;
-    console.log(state);
     const newPromise = new Promise ((resolve, reject) => {
         setTimeout (()=>{
             if(state === "fulfilled") {
-                console.log(state );
                 resolve (`Fulfilled promise in ${delay}ms`)
             }
             else {
-                console.log(state );
                 reject(`Rejected promise in ${delay}ms`)
             }
         }, delay)
@@ -88,10 +72,9 @@ function makePromises (options) {
 
 
 btnSubmit.addEventListener("click", (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const promiseOptions = {}
     if(inputDealy.value !== "" ) {
-        // console.log(inputDealy.value.trim());
         promiseOptions.delay = Number(inputDealy.value.trim())
     }
    
@@ -107,48 +90,19 @@ btnSubmit.addEventListener("click", (event) => {
     const promiseOptionsLength= Object.values(promiseOptions).length
 
     if (promiseOptionsLength !== 2) {
-
        warningMessage ("fill all fields") 
 
-        // iziToast.error({
-        //     title: 'Error:',
-        //     message: "fill all the fields",
-        //     position: 'topRight',
-        //     messageColor: 'white',
-        //     backgroundColor: 'rgb(238, 4, 50)',
-        //     theme: 'dark', // dark
-        //     color: 'red', // blue, red, green, yellow
-        //     width: "500",
-        //     messageSize: "16",
-        //     titleSize:"16",
-        //     progressBar: false,
-        // });
     }
     else {
-        console.log(promiseOptions);
-
-    makePromises (promiseOptions)
-        .then (data =>{
-
-           succesMessage (data)
-            // iziToast.success({
-            //     title: 'OK',
-            //     message: data,
-            //     position: 'topRight'
-            // });
-        })
-        .catch (data => {
-
-            errorMessage(data)
-            // iziToast.warning({
-            //     title: 'Caution',
-            //     message: data,
-            //     position: 'topRight'
-            // });
-        })
+        makePromises (promiseOptions)
+            .then (data =>{
+                succesMessage (data)
+            })
+            .catch (data => {
+                errorMessage(data)
+            })
     }
 
-    // promiseOptions = {};
     radiobutton.forEach(element => {
         element.checked = false 
     })
